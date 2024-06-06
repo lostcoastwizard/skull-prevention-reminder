@@ -1,18 +1,16 @@
 package com.skull_prevention_reminder;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.inject.Inject;
+import net.runelite.client.util.ColorUtil;
+import net.runelite.client.util.ImageUtil;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.ImageComponent;
 import net.runelite.client.ui.overlay.components.LineComponent;
-import net.runelite.client.util.ColorUtil;
-import net.runelite.client.util.ImageUtil;
-
-import javax.inject.Inject;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 class SkullPreventionReminderOverlay extends OverlayPanel {
-
     private BufferedImage redSkull = null; // off
     private BufferedImage normalSkull = null; // on
 
@@ -30,14 +28,21 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
         this.setSnappable(true);
     }
 
+    private void loadImages(int size) {
+        redSkull = loadSkullImage(true, size);
+        normalSkull = loadSkullImage(false, size);
+    }
+
+    private BufferedImage loadSkullImage(boolean redEyes, int size) {
+        var path = "/skull" + (redEyes ? "-red" : "") + ".png";
+        var img =  ImageUtil.loadImageResource(SkullPreventionReminderPlugin.class, path);
+        return ImageUtil.resizeImage(img, size, size, true);
+    }
+
     @Override
     public Dimension render(Graphics2D graphics) {
         if (config.pvpOnly() && !plugin.isInPVP()) {
             return null;
-        }
-
-        if (redSkull == null || normalSkull == null) {
-            reloadImages(config.scale());
         }
 
         boolean skullPreventionOn = plugin.skullPreventionEnabled();
@@ -52,25 +57,19 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
 
         if (skullPreventionOn) {
             lineComponentBuilder.right("ON").rightColor(Color.GREEN);
-            panelComponent.getChildren().add(new ImageComponent(normalSkull));
+            if (config.displayIcon()){
+                loadImages(config.scale());
+                panelComponent.getChildren().add(new ImageComponent(normalSkull));
+            }
         } else {
             lineComponentBuilder.right("OFF").rightColor(Color.RED);
-            panelComponent.getChildren().add(new ImageComponent(redSkull));
+            if (config.displayIcon()){
+                loadImages(config.scale());
+                panelComponent.getChildren().add(new ImageComponent(redSkull));
+            }
         }
 
         panelComponent.getChildren().add(lineComponentBuilder.build());
         return super.render(graphics);
-    }
-
-    protected void reloadImages(int size) {
-        redSkull = loadSkullImage(true, size);
-        normalSkull = loadSkullImage(false, size);
-    }
-
-    // image is a square, so we only need one size height and width
-    private BufferedImage loadSkullImage(boolean redEyes, int size) {
-        var path = "/skull" + (redEyes ? "-red" : "") + ".png";
-        var img =  ImageUtil.loadImageResource(SkullPreventionReminderPlugin.class, path);
-        return ImageUtil.resizeImage(img, size, size, true);
     }
 }

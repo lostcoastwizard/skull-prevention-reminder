@@ -8,7 +8,6 @@ import com.google.inject.Provides;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 
@@ -18,8 +17,8 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class SkullPreventionReminderPlugin extends net.runelite.client.plugins.Plugin
 {
-	private boolean skullPreventionEnabled = false;
 	private final int SKULL_PREVENTION_VARBIT_ID = 13131;
+	private boolean skullPreventionEnabled;
 
 	@Inject
 	private Client client;
@@ -45,28 +44,17 @@ public class SkullPreventionReminderPlugin extends net.runelite.client.plugins.P
 		overlayManager.remove(overlay);
 	}
 
-	@Subscribe
-	void onVarbitChanged(VarbitChanged varbitChanged) {
-		if (varbitChanged.getVarbitId() == SKULL_PREVENTION_VARBIT_ID) { // SKULL_PREVENTION_VARBIT_ID =
-			skullPreventionEnabled =  (varbitChanged.getValue() != 0);
-		}
-	}
-
-	@Subscribe
-	void onConfigChanged(ConfigChanged configChanged) {
-		if (configChanged.getKey().equals(SkullPreventionReminderConfig.SIZE_KEY)) {
-			overlay.reloadImages(config.scale());
-		}
-	}
-
 	@Provides
 	SkullPreventionReminderConfig provideConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(SkullPreventionReminderConfig.class);
 	}
 
-	public boolean skullPreventionEnabled() {
-		return skullPreventionEnabled;
+	@Subscribe
+	void onVarbitChanged(VarbitChanged varbitChanged) {
+		if (varbitChanged.getVarbitId() == SKULL_PREVENTION_VARBIT_ID) {
+			skullPreventionEnabled = (varbitChanged.getValue() == 1);
+		}
 	}
 
 	public boolean isInPVP() {
@@ -74,4 +62,7 @@ public class SkullPreventionReminderPlugin extends net.runelite.client.plugins.P
 				client.getVarbitValue(Varbits.PVP_SPEC_ORB) == 1;
 	}
 
+	public boolean skullPreventionEnabled() {
+		return skullPreventionEnabled;
+	}
 }

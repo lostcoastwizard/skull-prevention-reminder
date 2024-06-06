@@ -1,10 +1,12 @@
 package com.skull_prevention_reminder;
 
+import net.runelite.client.config.Range;
+import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("Skull Prevention Reminder")
-public interface SkullPreventionReminderConfig extends net.runelite.client.config.Config
+public interface SkullPreventionReminderConfig extends Config
 {
 	@ConfigItem(
 			keyName = "pvpOnly",
@@ -13,11 +15,20 @@ public interface SkullPreventionReminderConfig extends net.runelite.client.confi
 	)
 	default boolean pvpOnly() { return false; }
 
-	String SIZE_KEY = "scale";
 	@ConfigItem(
-			keyName = SIZE_KEY,
+			keyName = "displayIcon",
+			name = "Display icon",
+			description = "Display skull icon"
+	)
+	default boolean displayIcon() { return true; }
+
+	@ConfigItem(
+			keyName = "scale",
 			name = "Scale",
 			description = "The scale of the protect item icon.")
-	default int scale() { return 69; }
-
+	@Range(
+			min = 30,
+			max = 125
+	)
+	default int scale() { return 30; }
 }
