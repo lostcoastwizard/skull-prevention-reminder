@@ -1,4 +1,4 @@
-package com.skull_prevention_reminder;
+package com.SkullPreventionReminder;
 
 import net.runelite.client.config.Range;
 import net.runelite.client.config.Config;

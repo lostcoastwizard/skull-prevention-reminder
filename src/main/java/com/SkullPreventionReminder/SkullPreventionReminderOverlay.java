@@ -1,4 +1,4 @@
-package com.skull_prevention_reminder;
+package com.SkullPreventionReminder;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

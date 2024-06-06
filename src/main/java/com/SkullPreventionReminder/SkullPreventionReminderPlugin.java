@@ -1,4 +1,4 @@
-package com.skull_prevention_reminder;
+package com.SkullPreventionReminder;
 
 import javax.inject.Inject;
 import net.runelite.api.Client;

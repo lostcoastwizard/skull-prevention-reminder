@@ -1,4 +1,4 @@
-package com.skull_prevention_reminder;
+package com.SkullPreventionReminder;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
