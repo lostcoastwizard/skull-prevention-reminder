@@ -43,32 +43,38 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
     public Dimension render(Graphics2D graphics) {
         if (config.pvpOnly() && !plugin.isInPVP()) {
             return null;
-        }
+        } // if config set to pvpOnly AND player is not in PVP. Do not render.
 
-        boolean skullPreventionOn = plugin.skullPreventionEnabled();
+        if (redSkull == null || normalSkull == null) {
+            loadImages(config.scale());
+        } // if images are not loaded. Load the images.
 
-        panelComponent.setBackgroundColor(ColorUtil.colorWithAlpha(Color.BLACK, 0));
-        panelComponent.setWrap(true);
+        if ((redSkull.getWidth() != config.scale()) || (normalSkull.getWidth() != config.scale()))
+        {
+            loadImages(config.scale());
+        }  // if current image width != config value. Load the images.
 
         var lineComponentBuilder = LineComponent
                 .builder()
                 .left("SKULL PREVENTION")
                 .leftColor(Color.WHITE);
 
+        boolean skullPreventionOn = plugin.skullPreventionEnabled();
+
         if (skullPreventionOn) {
             lineComponentBuilder.right("ON").rightColor(Color.GREEN);
             if (config.displayIcon()){
-                loadImages(config.scale());
                 panelComponent.getChildren().add(new ImageComponent(normalSkull));
             }
         } else {
             lineComponentBuilder.right("OFF").rightColor(Color.RED);
             if (config.displayIcon()){
-                loadImages(config.scale());
                 panelComponent.getChildren().add(new ImageComponent(redSkull));
             }
         }
 
+        panelComponent.setBackgroundColor(ColorUtil.colorWithAlpha(Color.BLACK, 0));
+        panelComponent.setWrap(true);
         panelComponent.getChildren().add(lineComponentBuilder.build());
         return super.render(graphics);
     }
