@@ -31,4 +31,18 @@ public interface SkullPreventionReminderConfig extends Config
 			max = 125
 	)
 	default int scale() { return 30; }
+
+	@ConfigItem(
+			keyName = "displayMode",
+			name = "Display Mode",
+			description = "Choose when to display the skull prevention reminder"
+	)
+	default DisplayMode displayMode() { return DisplayMode.ALWAYS; }
+
+	enum DisplayMode
+	{
+		ALWAYS,
+		ONLY_WHEN_ON,
+		ONLY_WHEN_OFF
+	}
 }
