@@ -46,9 +46,13 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
             return null;
         }
 
+        if (config.displayMode() == DisplayMode.ALWAYS_OFF) {
+            return null;
+        }
+
         boolean skullPreventionOn = plugin.skullPreventionEnabled();
 
-        // Check if we should display based on the new DisplayMode setting
+        // Check if we should display based on the DisplayMode setting
         switch (config.displayMode()) {
             case ONLY_WHEN_ON:
                 if (!skullPreventionOn) {

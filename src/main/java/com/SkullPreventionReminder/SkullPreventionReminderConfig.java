@@ -43,6 +43,7 @@ public interface SkullPreventionReminderConfig extends Config
 	enum DisplayMode
 	{
 		ALWAYS,
+		ALWAYS_OFF,
 		ONLY_WHEN_ON,
 		ONLY_WHEN_OFF
 	}
