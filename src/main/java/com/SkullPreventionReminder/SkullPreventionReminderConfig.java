@@ -25,7 +25,7 @@ public interface SkullPreventionReminderConfig extends Config
 	@ConfigItem(
 			keyName = "scale",
 			name = "Scale",
-			description = "The scale of the protect item icon."
+			description = "The scale of the icon."
 	)
 	@Range(
 			min = 30,
