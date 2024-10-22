@@ -9,6 +9,7 @@ import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.ImageComponent;
 import net.runelite.client.ui.overlay.components.LineComponent;
+import com.SkullPreventionReminder.SkullPreventionReminderConfig.DisplayMode;
 
 class SkullPreventionReminderOverlay extends OverlayPanel {
     private BufferedImage redSkull = null; // off
@@ -43,7 +44,31 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
     public Dimension render(Graphics2D graphics) {
         if (config.pvpOnly() && !plugin.isInPVP()) {
             return null;
-        } // if config set to pvpOnly AND player is not in PVP. Do not render.
+        }
+
+        if (config.displayMode() == DisplayMode.ALWAYS_OFF) {
+            return null;
+        }
+
+        boolean skullPreventionOn = plugin.skullPreventionEnabled();
+
+        // Check if we should display based on the DisplayMode setting
+        switch (config.displayMode()) {
+            case ONLY_WHEN_ON:
+                if (!skullPreventionOn) {
+                    return null;
+                }
+                break;
+            case ONLY_WHEN_OFF:
+                if (skullPreventionOn) {
+                    return null;
+                }
+                break;
+            case ALWAYS:
+            default:
+                // Always display, no additional check needed
+                break;
+        }
 
         if (redSkull == null || normalSkull == null) {
             loadImages(config.scale());
@@ -58,8 +83,6 @@ class SkullPreventionReminderOverlay extends OverlayPanel {
                 .builder()
                 .left("SKULL PREVENTION")
                 .leftColor(Color.WHITE);
-
-        boolean skullPreventionOn = plugin.skullPreventionEnabled();
 
         if (skullPreventionOn) {
             lineComponentBuilder.right("ON").rightColor(Color.GREEN);
