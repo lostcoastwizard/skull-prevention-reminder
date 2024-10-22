@@ -11,21 +11,22 @@ public interface SkullPreventionReminderConfig extends Config
 	@ConfigItem(
 			keyName = "pvpOnly",
 			name = "PVP only",
-			description = "Only display overlay icon in pvp"
+			description = "Only display overlay icon in pvp."
 	)
 	default boolean pvpOnly() { return false; }
 
 	@ConfigItem(
 			keyName = "displayIcon",
 			name = "Display icon",
-			description = "Display skull icon"
+			description = "Display skull icon."
 	)
 	default boolean displayIcon() { return true; }
 
 	@ConfigItem(
 			keyName = "scale",
 			name = "Scale",
-			description = "The scale of the protect item icon.")
+			description = "The scale of the protect item icon."
+	)
 	@Range(
 			min = 30,
 			max = 125
@@ -35,7 +36,7 @@ public interface SkullPreventionReminderConfig extends Config
 	@ConfigItem(
 			keyName = "displayMode",
 			name = "Display Mode",
-			description = "Choose when to display the skull prevention reminder"
+			description = "Choose when to display the skull prevention reminder."
 	)
 	default DisplayMode displayMode() { return DisplayMode.ALWAYS; }
 

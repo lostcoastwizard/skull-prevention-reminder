@@ -1,14 +1,13 @@
 package com.SkullPreventionReminder;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import net.runelite.client.RuneLite;
+import net.runelite.client.externalplugins.ExternalPluginManager;
 
 public class SkullPreventionReminderPluginTest
 {
-	@Test
-	public void testPluginInitialization()
+	public static void main(String[] args) throws Exception
 	{
-		SkullPreventionReminderPlugin plugin = new SkullPreventionReminderPlugin();
-		assertNotNull(plugin);
+		ExternalPluginManager.loadBuiltin(SkullPreventionReminderPlugin.class);
+		RuneLite.main(args);
 	}
 }
