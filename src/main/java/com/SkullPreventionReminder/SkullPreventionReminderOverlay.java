@@ -9,7 +9,7 @@ import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.ImageComponent;
 import net.runelite.client.ui.overlay.components.LineComponent;
-import static com.SkullPreventionReminder.SkullPreventionReminderConfig.DisplayMode;
+import com.SkullPreventionReminder.SkullPreventionReminderConfig.DisplayMode;
 
 class SkullPreventionReminderOverlay extends OverlayPanel {
     private BufferedImage redSkull = null; // off
